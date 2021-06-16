@@ -27,12 +27,13 @@
     <loaded-nodes>
       <connection connection-id="a0c5b7f9-53a0-4ec5-9c9a-ea7ce42173b5">
         <schema name="prod" object-types="table, view" />
+        <schema name="test" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="a0c5b7f9-53a0-4ec5-9c9a-ea7ce42173b5">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+      <console name="Connection" type="STANDARD" schema="mysql" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
