@@ -42,7 +42,7 @@ public class ParkingService {
                 LocalDateTime inTime = LocalDateTime.now(ZoneId.systemDefault());
                 Ticket ticket = new Ticket();
 
-                if (ticketDAO.getTicketRegularUser(vehicleRegNumber)) {
+                if (ticketDAO.getTicketRegularUser(vehicleRegNumber) == true) {
                     System.out.println("Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.");
                 }
 
