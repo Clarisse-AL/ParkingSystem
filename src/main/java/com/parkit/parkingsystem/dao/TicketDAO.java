@@ -31,9 +31,7 @@ public class TicketDAO {
             ps.setInt(1,ticket.getParkingSpot().getId());
             ps.setString(2, ticket.getVehicleRegNumber());
             ps.setDouble(3, ticket.getPrice());
-           // ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));
             ps.setTimestamp(4, Timestamp.valueOf(ticket.getInTime()));
-//            ps.setTimestamp(5, (ticket.getOutTime() == null)?null: (new Timestamp(ticket.getOutTime().getTime())) );
             ps.setTimestamp(5, (ticket.getOutTime() == null)?null: (Timestamp.valueOf(ticket.getOutTime())) );
             return ps.execute();
         }catch (Exception ex){
@@ -72,6 +70,29 @@ public class TicketDAO {
             return ticket;
         }
     }
+
+    public boolean getTicketRegularUser(String vehicleRegNumber) {
+        Connection con = null;
+        Ticket ticket = new Ticket();
+        try {
+            con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBConstants.REGULAR_USER_TICKET);
+            ps.setString(1,vehicleRegNumber);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                ticket.setVehicleRegNumber(vehicleRegNumber);
+            }
+            dataBaseConfig.closeResultSet(rs);
+            dataBaseConfig.closePreparedStatement(ps);
+        }catch (Exception ex){
+            logger.error("Error identification User",ex);
+        }finally {
+            dataBaseConfig.closeConnection(con);
+            return true;
+        }
+    }
+
+
 
     public boolean updateTicket(Ticket ticket) {
         Connection con = null;

@@ -1,6 +1,7 @@
 package com.parkit.parkingsystem.service;
 
 import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.Ticket;
 
 import java.time.Duration;
@@ -45,5 +46,35 @@ public class FareCalculatorService {
             default:
                 throw new IllegalArgumentException("Unknown Parking Type");
         }
+    }
+
+    public void calculateFareRegularUser(Ticket ticket, TicketDAO ticketDAO) {
+
+        LocalDateTime inHour = ticket.getInTime();
+        LocalDateTime outHour = ticket.getOutTime();
+        Duration duration = Duration.between(inHour, outHour);
+        long durationSec = duration.getSeconds();
+        double durationHour = (double) durationSec / 3600;
+
+        switch (ticket.getParkingSpot().getParkingType()) {
+
+            case CAR: {
+                if (ticketDAO.getTicketRegularUser(ticket.getVehicleRegNumber())){
+                    ticket.setDiscountPrice((durationHour*Fare.CAR_RATE_PER_HOUR)*Fare.DISCOUNT_FIVE_PERCENT);
+                }
+                break;
+
+            }
+            case BIKE: {
+                if (ticketDAO.getTicketRegularUser(ticket.getVehicleRegNumber())){
+                    ticket.setDiscountPrice((durationHour*Fare.BIKE_RATE_PER_HOUR)*Fare.DISCOUNT_FIVE_PERCENT);
+                }
+            }
+            default:
+                throw new IllegalArgumentException("Unknown Parking Type");
+        }
+
+
+
     }
 }

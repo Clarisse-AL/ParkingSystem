@@ -2,6 +2,7 @@ package com.parkit.parkingsystem;
 
 import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.constants.ParkingType;
+import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.FareCalculatorService;
@@ -180,6 +181,36 @@ public class FareCalculatorServiceTest {
         ticket.setParkingSpot(parkingSpot);
         fareCalculatorService.calculateFare(ticket);
         assertEquals( (24 * Fare.CAR_RATE_PER_HOUR) , ticket.getPrice());
+    }
+
+    @Test
+    public void calculateFareCarRegularUser(){
+        LocalDateTime inTime = LocalDateTime.now();
+        LocalDateTime outTime = LocalDateTime.now().plusHours(2);
+
+        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
+        TicketDAO ticketDAO = new TicketDAO();
+
+        ticket.setInTime(inTime);
+        ticket.setOutTime(outTime);
+        ticket.setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFareRegularUser(ticket, ticketDAO);
+
+        assertEquals( (2 * Fare.CAR_RATE_PER_HOUR*Fare.DISCOUNT_FIVE_PERCENT) , ticket.getPrice());
+    }
+
+    @Test
+    public void calculateFareBikeRegularUser(){
+        LocalDateTime inTime = LocalDateTime.now();
+        LocalDateTime outTime = LocalDateTime.now().plusHours(2);
+
+        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE,false);
+        TicketDAO ticketDAO = new TicketDAO();
+        ticket.setInTime(inTime);
+        ticket.setOutTime(outTime);
+        ticket.setParkingSpot(parkingSpot);
+        fareCalculatorService.calculateFareRegularUser(ticket, ticketDAO);
+        assertEquals((2*Fare.BIKE_RATE_PER_HOUR*Fare.DISCOUNT_FIVE_PERCENT), ticket.getPrice());
     }
 
 }

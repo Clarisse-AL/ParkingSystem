@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
+
 
 public class ParkingService {
 
@@ -32,14 +32,20 @@ public class ParkingService {
     public void processIncomingVehicle() {
         try{
             ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
+
+
             if(parkingSpot !=null && parkingSpot.getId() > 0){
                 String vehicleRegNumber = getVehichleRegNumber();
                 parkingSpot.setAvailable(false);
                 parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
 
-                //Date inTime = new Date();
                 LocalDateTime inTime = LocalDateTime.now(ZoneId.systemDefault());
                 Ticket ticket = new Ticket();
+
+                if (ticketDAO.getTicketRegularUser(vehicleRegNumber)) {
+                    System.out.println("Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.");
+                }
+
                 //ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
                 //ticket.setId(ticketID);
                 ticket.setParkingSpot(parkingSpot);
