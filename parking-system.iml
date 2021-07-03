@@ -111,5 +111,6 @@
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
     <orderEntry type="library" name="org.junit.platform:junit-platform-commons:1.0.0-M6" level="project" />
     <orderEntry type="library" name="junit:junit:4.13.2" level="project" />
+    <orderEntry type="library" name="org.jetbrains:annotations:16.0.2" level="project" />
   </component>
 </module>
