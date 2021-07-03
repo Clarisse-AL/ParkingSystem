@@ -189,12 +189,12 @@ public class FareCalculatorServiceTest {
         LocalDateTime outTime = LocalDateTime.now().plusHours(2);
 
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
-        TicketDAO ticketDAO = new TicketDAO();
 
+        ticket.setVehicleRegNumber("car5");
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
         ticket.setParkingSpot(parkingSpot);
-        fareCalculatorService.calculateFareRegularUser(ticket, ticketDAO);
+        fareCalculatorService.calculateFare(ticket);
 
         assertEquals( (2 * Fare.CAR_RATE_PER_HOUR*Fare.DISCOUNT_FIVE_PERCENT) , ticket.getPrice());
     }
@@ -205,11 +205,12 @@ public class FareCalculatorServiceTest {
         LocalDateTime outTime = LocalDateTime.now().plusHours(2);
 
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE,false);
-        TicketDAO ticketDAO = new TicketDAO();
+
+        ticket.setVehicleRegNumber("bike5");
         ticket.setInTime(inTime);
         ticket.setOutTime(outTime);
         ticket.setParkingSpot(parkingSpot);
-        fareCalculatorService.calculateFareRegularUser(ticket, ticketDAO);
+        fareCalculatorService.calculateFare(ticket);
         assertEquals((2*Fare.BIKE_RATE_PER_HOUR*Fare.DISCOUNT_FIVE_PERCENT), ticket.getPrice());
     }
 

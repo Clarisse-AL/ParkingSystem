@@ -24,12 +24,19 @@ public class FareCalculatorService {
         long durationSec = duration.getSeconds();
         double durationHour = (double) durationSec / 3600;
 
+        TicketDAO ticketDAO = new TicketDAO();
+
         switch (ticket.getParkingSpot().getParkingType()) {
 
             case CAR: {
                 if (durationHour < 0.5) {
                     ticket.setPrice(0);
-                } else {
+                } else if(ticketDAO.getTicketRegularUser(ticket.getVehicleRegNumber())>2){
+                    ticket.setPrice((durationHour*Fare.CAR_RATE_PER_HOUR)*Fare.DISCOUNT_FIVE_PERCENT);
+
+                }
+
+                else {
                     ticket.setPrice(durationHour * Fare.CAR_RATE_PER_HOUR);
                 }
                 break;
@@ -38,7 +45,11 @@ public class FareCalculatorService {
             case BIKE: {
                 if (durationHour < 0.5) {
                     ticket.setPrice(0);
-                } else {
+                } else if(ticketDAO.getTicketRegularUser(ticket.getVehicleRegNumber())>2){
+                    ticket.setPrice((durationHour*Fare.BIKE_RATE_PER_HOUR)*Fare.DISCOUNT_FIVE_PERCENT);
+
+                }
+                else {
                     ticket.setPrice(durationHour * Fare.BIKE_RATE_PER_HOUR);
                 }
                 break;
@@ -48,18 +59,18 @@ public class FareCalculatorService {
         }
     }
 
-    public void calculateFareRegularUser(Ticket ticket, TicketDAO ticketDAO) {
-
-        LocalDateTime inHour = ticket.getInTime();
-        LocalDateTime outHour = ticket.getOutTime();
-        Duration duration = Duration.between(inHour, outHour);
-        long durationSec = duration.getSeconds();
-        double durationHour = (double) durationSec / 3600;
-
-        if (ticketDAO.getTicketRegularUser(ticket.getVehicleRegNumber())) {
-            ticket.setDiscountPrice((durationHour * Fare.CAR_RATE_PER_HOUR) * Fare.DISCOUNT_FIVE_PERCENT);
-        } else {
-            ticket.setDiscountPrice((durationHour * Fare.BIKE_RATE_PER_HOUR) * Fare.DISCOUNT_FIVE_PERCENT);
-        }
-    }
+//    public void calculateFareRegularUser(Ticket ticket, TicketDAO ticketDAO) {
+//
+//        LocalDateTime inHour = ticket.getInTime();
+//        LocalDateTime outHour = ticket.getOutTime();
+//        Duration duration = Duration.between(inHour, outHour);
+//        long durationSec = duration.getSeconds();
+//        double durationHour = (double) durationSec / 3600;
+//
+//        if (ticketDAO.getTicketRegularUser(ticket.getVehicleRegNumber())) {
+//            ticket.setDiscountPrice((durationHour * Fare.CAR_RATE_PER_HOUR) * Fare.DISCOUNT_FIVE_PERCENT);
+//        } else {
+//            ticket.setDiscountPrice((durationHour * Fare.BIKE_RATE_PER_HOUR) * Fare.DISCOUNT_FIVE_PERCENT);
+//        }
+//    }
 }

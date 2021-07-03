@@ -71,16 +71,18 @@ public class TicketDAO {
         }
     }
 
-    public boolean getTicketRegularUser(String vehicleRegNumber) {
+
+
+    public Integer getTicketRegularUser(String vehicleRegNumber) {
         Connection con = null;
-        Ticket ticket = new Ticket();
+        Integer nbTickets = 0;
         try {
             con = dataBaseConfig.getConnection();
             PreparedStatement ps = con.prepareStatement(DBConstants.REGULAR_USER_TICKET);
             ps.setString(1,vehicleRegNumber);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                ticket.setVehicleRegNumber(vehicleRegNumber);
+                nbTickets = rs.getInt(1);
             }
             dataBaseConfig.closeResultSet(rs);
             dataBaseConfig.closePreparedStatement(ps);
@@ -88,7 +90,7 @@ public class TicketDAO {
             logger.error("Error identification User",ex);
         }finally {
             dataBaseConfig.closeConnection(con);
-            return true;
+            return nbTickets;
         }
     }
 
@@ -112,4 +114,9 @@ public class TicketDAO {
         }
         return false;
     }
+    public static void main(String args[]){
+        TicketDAO ticketDAO = new TicketDAO();
+        System.out.println("nb ticket de la voiture car5 : " + ticketDAO.getTicketRegularUser("car5"));
+    }
 }
+
