@@ -59,18 +59,5 @@ public class FareCalculatorService {
         }
     }
 
-//    public void calculateFareRegularUser(Ticket ticket, TicketDAO ticketDAO) {
-//
-//        LocalDateTime inHour = ticket.getInTime();
-//        LocalDateTime outHour = ticket.getOutTime();
-//        Duration duration = Duration.between(inHour, outHour);
-//        long durationSec = duration.getSeconds();
-//        double durationHour = (double) durationSec / 3600;
-//
-//        if (ticketDAO.getTicketRegularUser(ticket.getVehicleRegNumber())) {
-//            ticket.setDiscountPrice((durationHour * Fare.CAR_RATE_PER_HOUR) * Fare.DISCOUNT_FIVE_PERCENT);
-//        } else {
-//            ticket.setDiscountPrice((durationHour * Fare.BIKE_RATE_PER_HOUR) * Fare.DISCOUNT_FIVE_PERCENT);
-//        }
-//    }
+
 }

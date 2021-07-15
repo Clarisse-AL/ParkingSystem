@@ -8,24 +8,19 @@ import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
 
-    private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
+    private static final DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
     private static ParkingSpotDAO parkingSpotDAO;
     private static TicketDAO ticketDAO;
     private static DataBasePrepareService dataBasePrepareService;
@@ -62,8 +57,8 @@ public class ParkingDataBaseIT {
         //TODO: check that a ticket is actually saved in DB and Parking table is updated with availability
         Ticket ticket = ticketDAO.getTicket("ABCDEF");
 
-        assertNotNull(ticket);
-        assertEquals(2,parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
+        Assertions.assertNotNull(ticket);
+        Assertions.assertEquals(2,parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
 
     }
 
@@ -74,8 +69,8 @@ public class ParkingDataBaseIT {
         //TODO: check that a ticket is actually saved in DB and Parking table is updated with availability
 
         Ticket ticket = ticketDAO.getTicket("ABCDEF");
-        assertNotNull(ticket);
-        assertEquals(4,parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE));
+        Assertions.assertNotNull(ticket);
+        Assertions.assertEquals(4,parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE));
 
     }
 
@@ -95,8 +90,8 @@ public class ParkingDataBaseIT {
         ticket.setOutTime(outTime);
 
 
-        assertNotNull(ticket.getPrice());
-        assertNotNull(ticket.getOutTime());
+        Assertions.assertNotNull(ticket.getPrice());
+        Assertions.assertNotNull(ticket.getOutTime());
 
 
     }

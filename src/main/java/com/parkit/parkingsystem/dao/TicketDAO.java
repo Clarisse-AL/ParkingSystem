@@ -114,7 +114,7 @@ public class TicketDAO {
         }
         return false;
     }
-    public static void main(String args[]){
+    public static void main(String[] args){
         TicketDAO ticketDAO = new TicketDAO();
         System.out.println("nb ticket de la voiture car5 : " + ticketDAO.getTicketRegularUser("car5"));
     }
